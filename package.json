@@ -1,0 +1,19 @@
+{
+  "name": "@majesticfudgie/pointer-buffer",
+  "author": {
+    "name": "Thomas Burnett-Taylor"
+  },
+  "repository": {
+    "url": "https://github.com/MajesticFudgie/pointer-buffer"
+  },
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "license": "MIT",
+  "typings": "build/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0"
+  }
+}
