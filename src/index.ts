@@ -29,6 +29,13 @@ export default class PointerBuffer {
 		}
 	}
 
+	readDWORD() {
+		this.pointerCheck(4);
+		const num = this.data.readInt32LE(this.pointer);
+		this.forward(4);
+		return num;
+	}
+
 	readUint32() {
 		this.pointerCheck(4);
 		const num = this.data.readUint32LE(this.pointer);
@@ -40,6 +47,21 @@ export default class PointerBuffer {
 		this.pointerCheck(2);
 		const num = this.data.readUint16LE(this.pointer);
 		this.forward(2);
+		return num;
+	}
+
+	readInt16() {
+		this.pointerCheck(2);
+		const num = this.data.readInt16LE(this.pointer);
+		this.forward(2);
+		return num;
+	}
+
+
+	readFloat() {
+		this.pointerCheck(4);
+		const num = this.data.readFloatLE(this.pointer);
+		this.forward(4);
 		return num;
 	}
 
@@ -79,6 +101,10 @@ export default class PointerBuffer {
 	// Forwards the pointer without read operations.
 	forward(length: number) {
 		this.pointer += length;
+		this.pointerHistory.push(length);
+	}
+	backward(length: number) {
+		this.pointer = Math.abs(this.pointer - length);
 		this.pointerHistory.push(length);
 	}
 

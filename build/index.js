@@ -25,6 +25,12 @@ class PointerBuffer {
             throw new Error(`Attempting to read past end of buffer! ${(this.pointer + dataSize)} > ${this.data.length}`);
         }
     }
+    readDWORD() {
+        this.pointerCheck(4);
+        const num = this.data.readInt32LE(this.pointer);
+        this.forward(4);
+        return num;
+    }
     readUint32() {
         this.pointerCheck(4);
         const num = this.data.readUint32LE(this.pointer);
@@ -35,6 +41,18 @@ class PointerBuffer {
         this.pointerCheck(2);
         const num = this.data.readUint16LE(this.pointer);
         this.forward(2);
+        return num;
+    }
+    readInt16() {
+        this.pointerCheck(2);
+        const num = this.data.readInt16LE(this.pointer);
+        this.forward(2);
+        return num;
+    }
+    readFloat() {
+        this.pointerCheck(4);
+        const num = this.data.readFloatLE(this.pointer);
+        this.forward(4);
         return num;
     }
     readUint8() {
@@ -69,6 +87,10 @@ class PointerBuffer {
     // Forwards the pointer without read operations.
     forward(length) {
         this.pointer += length;
+        this.pointerHistory.push(length);
+    }
+    backward(length) {
+        this.pointer = Math.abs(this.pointer - length);
         this.pointerHistory.push(length);
     }
     // Undoes the last read
